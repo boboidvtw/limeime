@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <!--
   ~ /*
@@ -60,6 +60,16 @@
     <color name="candidate_foreground_dark">#FFCFD8DC</color>
     <color name="second_foreground_dark">#FF6B6B6B</color>
     <color name="third_foreground_dark">#FF717171</color>
+
+    <!-- colors for dark accent theme (Proposal A) -->
+    <color name="keyboard_background_dark_accent">#FF141420</color>
+    <color name="key_background_dark_accent">#FF242436</color>
+    <color name="key_text_dark_accent">#FFF5F5FA</color>
+    <color name="candidate_background_dark_accent">#FF1B1B2A</color>
+    <color name="candidate_pill_unselected">#FF2A2A3F</color>
+    <color name="candidate_pill_selected">#FF7C4DFF</color>
+    <color name="candidate_pill_selected_text">#FFFFFFFF</color>
+
 
 
 

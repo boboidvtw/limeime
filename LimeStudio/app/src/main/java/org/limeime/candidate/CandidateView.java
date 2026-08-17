@@ -1560,6 +1560,26 @@ public class CandidateView extends View implements View.OnClickListener {
 
                 }
 
+                // Draw rounded pill card for candidate item
+                Paint pillPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+                pillPaint.setStyle(Paint.Style.FILL);
+                float pillMarginX = 3.0f;
+                float pillMarginY = 4.0f;
+                android.graphics.RectF pillRect = new android.graphics.RectF(
+                        mWordX[i] + pillMarginX,
+                        bgPadding.top + pillMarginY,
+                        mWordX[i] + mWordWidth[i] - pillMarginX,
+                        height - pillMarginY
+                );
+                float pillRadius = (height - bgPadding.top - (pillMarginY * 2)) * 0.35f;
+                if (i == mSelectedIndex) {
+                    pillPaint.setColor(ContextCompat.getColor(mContext, R.color.candidate_pill_selected));
+                    candidatePaint.setColor(ContextCompat.getColor(mContext, R.color.candidate_pill_selected_text));
+                } else {
+                    pillPaint.setColor(ContextCompat.getColor(mContext, R.color.candidate_pill_unselected));
+                }
+                canvas.drawRoundRect(pillRect, pillRadius, pillRadius, pillPaint);
+
                 if(isEmoji){
                     canvas.drawText(suggestion, mWordX[i] + X_GAP, Math.round(textBaseLine*0.95), candidateEmojiPaint);
                 }else{
