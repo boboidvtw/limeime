@@ -1491,16 +1491,15 @@ public class CandidateView extends View implements View.OnClickListener {
         if (canvas != null) {
 
             // Moved from above by jeremy '10 3, 29. Paint mSelectedindex in highlight here
+            // Legacy square highlight disabled for rounded card pills
+            /*
             if ( count > 0 && mSelectedIndex >= 0) {
-                //    candidatePaint.setColor(mColorComposingCode);
-                //    canvas.drawRect(mWordX[mSelectedIndex],bgPadding.top, mWordWidth[mSelectedIndex] , height, candidatePaint);
-
                 canvas.translate(mWordX[mSelectedIndex], 0);
                 mDrawableSuggestHighlight.setBounds(0, bgPadding.top, mWordWidth[mSelectedIndex], height);
                 mDrawableSuggestHighlight.draw(canvas);
                 canvas.translate(-mWordX[mSelectedIndex], 0);
-
             }
+            */
             if(mTransparentCandidateView){
                 canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
 
