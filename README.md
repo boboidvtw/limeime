@@ -1,14 +1,31 @@
-# ![萊姆輸入法](LimeStudio/app/src/main/res/drawable-hdpi/logo.png) 萊姆輸入法
+# ![萊姆輸入法](LimeStudio/app/src/main/res/drawable-hdpi/logo.png) 萊姆輸入法 (Dark Accent)
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Donate with PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=for-the-badge&logo=paypal)](https://www.paypal.me/boboidvtw)
 
 LIME 是一套以繁體中文輸入為核心的開源輸入法專案，採用 GPL 授權並持續開源維護，目前支援 Android 與 iOS 兩大平台。
 
-本次 2026 版本為相隔多年後的長週期更新，重點包含 Android 新版相容性、架構重整與整體穩定性提升。
+---
+
+## 📖 關於本專案 (About)
+
+本專案為 **boboidvtw/limeime** 社群 Fork 重構版本，主要特色包含：
+
+- **全新「深色極致質感 (Dark Accent)」佈景主題**：導入 10dp 大圓角卡片 (Card Keycaps) 按鍵與高對比 Neon 膠囊候選字列 (Rounded Candidate Pills)。
+- **原生主題選單整合**：直接於 LIME App 的 **「喜好設定」 ➔ 「鍵盤樣式」** 選單中內建 **「深色極致質感」** 選項。
+- **清晰版本號標示**：升級 App 顯示名稱為 `萊姆輸入法 (Dark Accent)`，版本號為 `v6.2.0-DarkAccent` (VersionCode 202662000)，解決安裝升級時無法識別版本的困擾。
+
+---
+
+## ❤️ 贊助與支持 (Sponsor & Support)
+
+如果您喜歡這個專案或覺得有幫助到您，歡迎以小額贊助支持開源維護與開發！
+
+[![Donate with PayPal](https://img.shields.io/badge/Donate-PayPal-blue.svg?style=for-the-badge&logo=paypal)](https://www.paypal.me/boboidvtw)
+
+---
 
 ## 官方網站與使用手冊
-
-一般使用者請從官方網站開始：
 
 - **官方網站**：<https://lime-ime.github.io/limeime>
 - **使用手冊**：<https://lime-ime.github.io/limeime/pages>
@@ -23,77 +40,38 @@ App 僅在功能需要時宣告少數權限（如下載碼表、按鍵震動、�
 
 ## 下載
 
-### 最新正式版（GitHub Release）
+### 最新改版（v6.2.0-DarkAccent）
 
-- 版本：v6.1.38
-- APK：[LIMEHD2026-6.1.38.apk](https://github.com/lime-ime/limeime/releases/download/v6.1.38/LIMEHD2026-6.1.38.apk)
+- **版本**：v6.2.0-DarkAccent
+- **顯示名稱**：萊姆輸入法 (Dark Accent)
+- **套件名稱**：`net.toload.main.hd2026`
+- **APK 安裝檔**：[LIMEHD-v6.2.0-DarkAccent.apk](https://github.com/boboidvtw/limeime/releases)
+
+---
 
 ## 版本與相容性
 
-- 套件名稱：net.toload.main.hd2026
-- 顯示名稱：萊姆輸入法A
 - 目標 SDK：37
 - 最低支援 SDK：25（Android 7.1；自 v6.1.32 起）
-- GitHub Release APK 與 Google Play 版本使用不同套件名稱與簽署金鑰，可以同時安裝並共存，但不能互相直接更新或升級
-- Google Play 封閉測試使用者請從 Google Play 更新。若要在 GitHub APK 與 Google Play 版本之間切換使用，請先備份輸入法資料
+- GitHub Release APK 與 Google Play 版本使用不同套件名稱與簽署金鑰，可以同時安裝並共存，但不能互相直接更新或升級。
 
-### 為何自 v6.1.32 起最低支援 Android 7.1（API 25）
-
-LIME 的輸入法碼表由 GitHub 雲端下載；GitHub 會將下載導向使用 Let's Encrypt 憑證鏈的 `raw.githubusercontent.com`。Android 7.0（API 24）以前的系統 CA 信任庫不包含該憑證鏈所需的 ISRG Root X1，因此無法建立受信任的 TLS 連線，碼表下載與安裝會失敗。
-
-系統 CA 信任庫屬於 Android 作業系統，App 無法安全地替舊系統更新。LIME 不採用略過憑證驗證或內建自訂 CA 的繞過方式，因此從 v6.1.32 起，Android 版本的最低支援層級設定為 API 25。API 21–24 裝置無法從 Google Play 安裝 v6.1.32 之後的版本，也無法側載新版 APK；仍可繼續使用 v6.1.31 或更早的相容版本。
+---
 
 ## 開發
 
 本專案包含 Android 與 iOS 兩套平台原始碼：
 
-- **Android（`LimeStudio/`，Java / Kotlin）**：以 Android Studio 開啟 `LimeStudio/` 專案根目錄，待 Gradle Sync 完成後，選擇 `app` 設定檔即可建置與執行。建議使用近期版本的 Android Studio 與相符的 Android SDK / Build Tools。
-- **iOS（`LimeIME-iOS/`，Swift）**：以 Xcode 開啟 `LimeIME-iOS/LimeIME.xcodeproj`，選好目標 scheme 與簽署團隊後即可建置與執行。鍵盤擴充需在實機或模擬器上啟用後測試。
+- **Android（`LimeStudio/`，Java / Kotlin）**：以 Android Studio 開啟 `LimeStudio/` 專案根目錄，待 Gradle Sync 完成後，選擇 `app` 設定檔即可建置與執行。
+  ```bash
+  cd LimeStudio
+  ./gradlew assembleDebug
+  ```
 
-## 主要技術規格文件
+---
 
-開發前建議先閱讀以下核心架構與格式規格文件（位於 `docs/`）：
-
-### 架構
-
-- [LimeIME 架構總覽](docs/LIMEIME_ARCHITECTURE.md) — 整體架構與模組關係
-- [UI 架構（MVC）](docs/UI_ARCHITECTURE.md) — 介面層的 MVC 設計
-- [IMService 規格](docs/IM_SERVICE.md) — 輸入法服務核心規格
-
-### 資料與格式
-
-- [`limedb` 規格](docs/LIMEDB_SPEC.md) — LimeDB 資料庫格式
-- [CIN / LIME 檔案格式規格](docs/CIN_LIME_SPEC.md) — 輸入法碼表文字格式
-
-### 鍵盤佈局
-
-- [Android / iPhone 鍵盤佈局](docs/ANDROID_IPHONE_KEYBOARD.md) — 跨平台鍵盤佈局與特殊鍵行為
-- [iPad 鍵盤佈局](docs/IPAD_KEYBOARD.md) — iPad 專屬鍵盤佈局與候選列
-
-### 設定
-
-- [LIME Settings 規格](docs/LIME_SETTINGS.md) — 設定 App 與喜好設定規格
-- [喜好設定對照表](docs/PREFS_TABLE.md) — iOS 與 Android 各喜好設定項目對照
-
-## 問題回報
-
-若您遇到使用問題，請優先透過 GitHub Issue 回報，並盡量提供以下資訊：
-
-- 裝置品牌與型號（例如：Samsung Galaxy S23 / iPhone 15）
-- 系統版本（例如：Android 14 / API 34，或 iOS 17）
-- App 版本（例如：v6.1.34）
-- 安裝來源（GitHub Release 或歷史版本 APK）
-- 問題發生步驟與預期結果
-- 實際結果與錯誤訊息（若有）
-
-資訊越完整，越能加速問題重現與修正。
-
-## 開發團隊
+## 開發團隊與社群維護
 
 - Jeremy Wu
 - Julian Chen
 - Art Hung
-
-## 聯絡方式
-
-- 萊姆小編 [limeimetw@gmail.com](mailto:limeimetw@gmail.com)
+- boboidvtw (Dark Accent UI Redesign)
