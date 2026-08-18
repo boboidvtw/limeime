@@ -6985,6 +6985,8 @@ public class LIMEService extends InputMethodService
             new KeyboardTheme("TechBlue", 3, R.style.LIMETheme_TechBlue),
             new KeyboardTheme("FashionPurple", 4, R.style.LIMETheme_FashionPurple),
             new KeyboardTheme("RelaxGreen", 5, R.style.LIMETheme_RelaxGreen),
+            new KeyboardTheme("System", 6, R.style.LIMETheme_Light),
+            new KeyboardTheme("DarkAccent", 7, R.style.LIMETheme_DarkAccent),
     };
 
     private int mKeyboardThemeIndex = -1;
@@ -7004,7 +7006,7 @@ public class LIMEService extends InputMethodService
     }
 
     private boolean isEffectiveDarkTheme() {
-        if (mKeyboardThemeIndex == 1) return true;
+        if (mKeyboardThemeIndex == 1 || mKeyboardThemeIndex == 7) return true;
         if (mKeyboardThemeIndex == 6) {
             int uiMode = getResources().getConfiguration().uiMode
                     & Configuration.UI_MODE_NIGHT_MASK;

@@ -54,6 +54,8 @@
         <item name ="shiftKeyIcon">@drawable/sym_keyboard_shift</item>
         <item name ="shiftKeyShiftedIcon">@drawable/sym_keyboard_shift_shifted</item>
     </style>
+    <style name="LIMEKeyboard.DarkAccent" parent = "LIMEKeyboard.Dark">
+    </style>
 
     <style name="LIMEKeyboard.Pink" parent = "LIMEKeyboard">
         <item name="spaceKeyIcon">@drawable/sym_keyboard_space_white</item>
@@ -112,6 +114,10 @@
         <item name="android:background">@drawable/keyboard_background_dark</item>
         <item name="android:keyBackground">@drawable/btn_keyboard_key_dark</item>
     </style>
+    <style name="LIMEKeyboardLayout.DarkAccent" parent = "LIMEKeyboardLayout">
+        <item name="android:background">@color/keyboard_background_dark_accent</item>
+        <item name="android:keyBackground">@drawable/btn_keyboard_key_dark_accent</item>
+    </style>
     <style name="LIMEKeyboardLayout.Pink" parent = "LIMEKeyboardLayout">
         <item name="android:background">@drawable/keyboard_background_pink</item>
         <item name="android:keyBackground">@drawable/btn_keyboard_key_pink</item>
@@ -140,6 +146,10 @@
     <style name="LIMEPopupKeyboardLayout.Dark" parent = "LIMEPopupKeyboardLayout">
         <item name="android:background">@drawable/keyboard_popup_panel_background_dark</item>
         <item name="android:keyBackground">@drawable/btn_keyboard_key_dark</item>
+    </style>
+    <style name="LIMEPopupKeyboardLayout.DarkAccent" parent = "LIMEPopupKeyboardLayout">
+        <item name="android:background">@color/candidate_background_dark_accent</item>
+        <item name="android:keyBackground">@drawable/btn_keyboard_key_dark_accent</item>
     </style>
     <style name="LIMEPopupKeyboardLayout.Pink" parent = "LIMEPopupKeyboardLayout">
         <item name="android:background">@drawable/keyboard_popup_panel_background_pink</item>
@@ -212,6 +222,20 @@
         <item name="popupHint">@drawable/hint_popup_dark</item>
 
         <item name="keyTextColorNormal">@color/foreground_dark</item>
+        <item name="keyTextColorPressed">@color/color_common_green_hl</item>
+
+        <item name="functionKeyTextColorNormal">@color/third_foreground_dark</item>
+        <item name="functionKeyTextColorPressed">@color/color_common_light_green_hl</item>
+
+        <item name="keySubLabelTextColorNormal">@color/second_foreground_dark</item>
+        <item name="keySubLabelTextColorPressed">@color/color_common_light_green_hl</item>
+    </style>
+    <style name="LIMEKeyboardBaseView.DarkAccent" parent = "LIMEKeyboardBaseView">
+        <item name="keyPreviewLayout">@layout/key_preview_dark</item>
+        <item name="keyBackground">@drawable/btn_keyboard_key_dark_accent</item>
+        <item name="popupHint">@drawable/hint_popup_dark</item>
+
+        <item name="keyTextColorNormal">@color/key_text_dark_accent</item>
         <item name="keyTextColorPressed">@color/color_common_green_hl</item>
 
         <item name="functionKeyTextColorNormal">@color/third_foreground_dark</item>
@@ -304,6 +328,8 @@
         <item name="drawableArrowDown">@drawable/sym_keyboard_down_dark</item>
         <item name="drawableArrowRight">@drawable/sym_keyboard_right_dark</item>
         <item name="drawableArrowLeft">@drawable/sym_keyboard_left_dark</item>
+    </style>
+    <style name="LIMEBaseKeyboard.DarkAccent" parent = "LIMEBaseKeyboard.Dark">
     </style>
 
     <style name="LIMEBaseKeyboard.Pink" parent = "LIMEBaseKeyboard">
@@ -406,6 +432,12 @@
         <!-- color of  composing text view above candidate view   -->
         <item name="composingTextColor">@color/candidate_foreground_dark</item>
         <item name="composingBackgroundColor">@color/composing_background_dark</item>
+    </style>
+    <style name="LIMECandidateView.DarkAccent"  parent = "LIMECandidateView.Dark">
+        <item name="dismissPillColor">@color/keyboard_background_dark_accent</item>
+        <item name="candidateBackground">@color/candidate_background_dark_accent</item>
+        <item name="candidateNormalTextColor">@color/foreground_dark</item>
+        <item name="candidateNormalTextHighlightColor">@color/candidate_pill_selected_text</item>
     </style>
     <style name="LIMECandidateView.Pink"  parent = "LIMECandidateView">
         <item name="dismissPillColor">@color/keyboard_background_pink</item>

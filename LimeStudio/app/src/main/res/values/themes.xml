@@ -197,6 +197,14 @@
     <item name="LIMEPopupKeyboardLayout">@style/LIMEPopupKeyboardLayout.Dark</item>
     <item name="LIMECandidateView">@style/LIMECandidateView.Dark</item>
   </style>
+  <style name="LIMETheme.DarkAccent">
+    <item name="LIMEKeyboardStyle">@style/LIMEKeyboard.DarkAccent</item>
+    <item name="LIMEBaseKeyboardStyle">@style/LIMEBaseKeyboard.DarkAccent</item>
+    <item name="LIMEKeyboardBaseView">@style/LIMEKeyboardBaseView.DarkAccent</item>
+    <item name="LIMEKeyboardLayout">@style/LIMEKeyboardLayout.DarkAccent</item>
+    <item name="LIMEPopupKeyboardLayout">@style/LIMEPopupKeyboardLayout.DarkAccent</item>
+    <item name="LIMECandidateView">@style/LIMECandidateView.DarkAccent</item>
+  </style>
   <style name="LIMETheme.Pink">
     <item name="LIMEKeyboardStyle">@style/LIMEKeyboard.Pink</item>
     <item name="LIMEBaseKeyboardStyle">@style/LIMEBaseKeyboard.Pink</item>
