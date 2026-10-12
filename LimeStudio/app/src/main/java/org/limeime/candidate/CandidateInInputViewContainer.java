@@ -49,6 +49,14 @@ public class CandidateInInputViewContainer extends LinearLayout  implements View
     private View mRightButtonParent;
     private CandidateView mCandidateView;
     private LIMEService mService;
+    private View mSmartToolbarContainer;
+    private ImageButton mBtnToolbarClipboard;
+    private ImageButton mBtnToolbarOneHand;
+    private ImageButton mBtnToolbarHaptic;
+    private ImageButton mBtnToolbarSettings;
+    private View mClipboardStripContainer;
+    private LinearLayout mClipboardChipsLayout;
+    private boolean mClipboardOpen = false;
     private static final long IDLE_TOOLS_REVEAL_DELAY_MS = 120L;
     private boolean mIdleToolsRevealReady = true;
     private final Runnable mRevealIdleToolsRunnable = new Runnable() {
@@ -116,6 +124,19 @@ public class CandidateInInputViewContainer extends LinearLayout  implements View
                     Log.w(TAG, "Keyboard button not found!");
                 }
             }
+            mSmartToolbarContainer = findViewById(R.id.smart_toolbar_container);
+            mBtnToolbarClipboard = findViewById(R.id.btn_toolbar_clipboard);
+            mBtnToolbarOneHand = findViewById(R.id.btn_toolbar_onehand);
+            mBtnToolbarHaptic = findViewById(R.id.btn_toolbar_haptic);
+            mBtnToolbarSettings = findViewById(R.id.btn_toolbar_settings);
+            mClipboardStripContainer = findViewById(R.id.clipboard_strip_container);
+            mClipboardChipsLayout = findViewById(R.id.clipboard_chips_layout);
+
+            if (mBtnToolbarClipboard != null) mBtnToolbarClipboard.setOnClickListener(this);
+            if (mBtnToolbarOneHand != null) mBtnToolbarOneHand.setOnClickListener(this);
+            if (mBtnToolbarHaptic != null) mBtnToolbarHaptic.setOnClickListener(this);
+            if (mBtnToolbarSettings != null) mBtnToolbarSettings.setOnClickListener(this);
+
             mCandidateView = findViewById(R.id.candidatesView);
             //View mKeyboardView = findViewById(R.id.keyboard);
 
@@ -349,6 +370,23 @@ public class CandidateInInputViewContainer extends LinearLayout  implements View
                 if (mRightButtonParent != null) {
                     mRightButtonParent.setVisibility((showIdleTools || showActiveChrome) ? View.VISIBLE : View.GONE);
                 }
+
+                if (showIdleTools) {
+                    if (mClipboardOpen) {
+                        if (mClipboardStripContainer != null) mClipboardStripContainer.setVisibility(View.VISIBLE);
+                        if (mSmartToolbarContainer != null) mSmartToolbarContainer.setVisibility(View.GONE);
+                        if (mCandidateView != null) mCandidateView.setVisibility(View.GONE);
+                    } else {
+                        if (mSmartToolbarContainer != null) mSmartToolbarContainer.setVisibility(View.VISIBLE);
+                        if (mClipboardStripContainer != null) mClipboardStripContainer.setVisibility(View.GONE);
+                        if (mCandidateView != null) mCandidateView.setVisibility(View.GONE);
+                    }
+                } else {
+                    mClipboardOpen = false;
+                    if (mSmartToolbarContainer != null) mSmartToolbarContainer.setVisibility(View.GONE);
+                    if (mClipboardStripContainer != null) mClipboardStripContainer.setVisibility(View.GONE);
+                    if (mCandidateView != null) mCandidateView.setVisibility(View.VISIBLE);
+                }
                 ViewGroup.LayoutParams params = mCandidateView.getLayoutParams();
                 if (params instanceof LinearLayout.LayoutParams) {
                     LinearLayout.LayoutParams llParams = (LinearLayout.LayoutParams) params;
@@ -450,6 +488,26 @@ public class CandidateInInputViewContainer extends LinearLayout  implements View
             if (mCandidateView != null) {
                 mCandidateView.dismissComposingFromCandidate();
             }
+        } else if (v == mBtnToolbarClipboard) {
+            toggleClipboardPanel();
+        } else if (v == mBtnToolbarOneHand) {
+            if (mService != null) {
+                org.limeime.keyboard.KeyboardLayoutController.cycleOneHandMode(mService);
+            }
+        } else if (v == mBtnToolbarHaptic) {
+            if (mService != null) {
+                org.limeime.global.LIMEPreferenceManager pref = new org.limeime.global.LIMEPreferenceManager(mService);
+                int lvl = pref.getVibrateLevel();
+                int nextLvl = (lvl % 5) + 1;
+                pref.setVibrateLevel(nextLvl);
+                org.limeime.haptic.ModernHapticEngine.getInstance(ctx).performKeypressHaptic(this, nextLvl, 0);
+            }
+        } else if (v == mBtnToolbarSettings) {
+            if (mService != null) {
+                android.content.Intent intent = new android.content.Intent(mService, org.limeime.ui.LIMESettings.class);
+                intent.addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+                mService.startActivity(intent);
+            }
         } else if (v == mEmojiButton) {
             if (mService != null) {
                 mService.onKey(LIME.KEYCODE_EMOJI_PANEL, null, 0, 0);
@@ -469,6 +527,74 @@ public class CandidateInInputViewContainer extends LinearLayout  implements View
             else if (!mCandidateView.isEmpty())
                 toggleCandidatePopup();
         }
+    }
+
+
+    private void toggleClipboardPanel() {
+        mClipboardOpen = !mClipboardOpen;
+        if (mClipboardOpen) {
+            populateClipboardChips();
+        }
+        post(this::requestLayout);
+        updateCandidateViewWidthConstraint();
+    }
+
+    private void populateClipboardChips() {
+        if (mClipboardChipsLayout == null) return;
+        mClipboardChipsLayout.removeAllViews();
+        java.util.List<String> history = org.limeime.clipboard.LIMEClipboardManager.getInstance(ctx).getClipHistory();
+
+        if (history.isEmpty()) {
+            android.widget.TextView emptyView = new android.widget.TextView(ctx);
+            emptyView.setText(R.string.clipboard_empty);
+            emptyView.setTextColor(android.graphics.Color.GRAY);
+            emptyView.setTextSize(13);
+            emptyView.setPadding(16, 8, 16, 8);
+            mClipboardChipsLayout.addView(emptyView);
+            return;
+        }
+
+        float density = getResources().getDisplayMetrics().density;
+        int chipMargin = Math.round(4 * density);
+        int chipPaddingH = Math.round(10 * density);
+        int chipPaddingV = Math.round(6 * density);
+
+        for (final String item : history) {
+            android.widget.TextView chip = new android.widget.TextView(ctx);
+            chip.setText(item);
+            chip.setMaxLines(1);
+            chip.setMaxWidth(Math.round(180 * density));
+            chip.setEllipsize(android.text.TextUtils.TruncateAt.END);
+            chip.setBackgroundResource(R.drawable.bg_clipboard_chip);
+            chip.setTextColor(android.graphics.Color.WHITE);
+            chip.setTextSize(13);
+            chip.setPadding(chipPaddingH, chipPaddingV, chipPaddingH, chipPaddingV);
+
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            lp.setMargins(chipMargin, 0, chipMargin, 0);
+            chip.setLayoutParams(lp);
+
+            chip.setOnClickListener(v -> {
+                if (mService != null && mService.getCurrentInputConnection() != null) {
+                    mService.getCurrentInputConnection().commitText(item, 1);
+                    org.limeime.haptic.ModernHapticEngine.getInstance(ctx).performKeypressHaptic(chip, 2, 0);
+                }
+            });
+
+            mClipboardChipsLayout.addView(chip);
+        }
+
+        android.widget.TextView clearBtn = new android.widget.TextView(ctx);
+        clearBtn.setText(R.string.clipboard_clear);
+        clearBtn.setTextColor(android.graphics.Color.parseColor("#FFEF5350"));
+        clearBtn.setTextSize(12);
+        clearBtn.setPadding(chipPaddingH, chipPaddingV, chipPaddingH, chipPaddingV);
+        clearBtn.setOnClickListener(v -> {
+            org.limeime.clipboard.LIMEClipboardManager.getInstance(ctx).clearHistory();
+            populateClipboardChips();
+        });
+        mClipboardChipsLayout.addView(clearBtn);
     }
 
     private boolean isShowingIdleTools() {

@@ -316,4 +316,11 @@
     <!-- Batch 6: related sheet field hints -->
     <string name="manage_related_hint_word">詞彙</string>
     <string name="manage_related_hint_related">關聯字</string>
+    <!-- Smart Utility Toolbar & Clipboard -->
+    <string name="toolbar_clipboard">剪貼簿</string>
+    <string name="toolbar_onehand">單手模式</string>
+    <string name="toolbar_haptic">觸覺回饋</string>
+    <string name="toolbar_settings">設定</string>
+    <string name="clipboard_empty">剪貼簿無歷史記錄</string>
+    <string name="clipboard_clear">清空</string>
 </resources>

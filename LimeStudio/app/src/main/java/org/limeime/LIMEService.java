@@ -6168,45 +6168,21 @@ public class LIMEService extends InputMethodService
     @SuppressWarnings("deprecation")
     private void vibrate(long duration) {
         if (duration <= 0) {
-            Log.w(TAG, "vibrate() called with invalid duration: " + duration);
             return;
         }
+        int level = (mLIMEPref != null) ? mLIMEPref.getVibrateLevel() : 3;
+        org.limeime.haptic.ModernHapticEngine.getInstance(this)
+                .performKeypressHaptic(mInputView, level, duration);
+    }
 
-        if (KeypressHapticPolicy.shouldUseSystemKeyboardTapHaptic() && mInputView != null) {
-            int flags = HapticFeedbackConstants.FLAG_IGNORE_VIEW_SETTING;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-                flags |= HapticFeedbackConstants.FLAG_IGNORE_GLOBAL_SETTING;
-            }
-            mInputView.performHapticFeedback(HapticFeedbackConstants.KEYBOARD_TAP, flags);
-            return;
+    public void reloadKeyboardLayout() {
+        if (mKeyboardSwitcher != null) {
+            mKeyboardSwitcher.resetKeyboards(true);
+            initialIMKeyboard();
         }
-
-        Vibrator vibrator = getVibrator();
-        if (vibrator == null) {
-            Log.e(TAG, "vibrate() - vibrator is null! Failed to get vibrator service.");
-            return;
-        }
-
-        try {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-                android.os.VibrationEffect effect = android.os.VibrationEffect.createOneShot(
-                        duration, android.os.VibrationEffect.DEFAULT_AMPLITUDE);
-                android.os.VibrationAttributes attributes = new android.os.VibrationAttributes.Builder()
-                        .setUsage(android.os.VibrationAttributes.USAGE_TOUCH)
-                        .build();
-                vibrator.vibrate(effect, attributes);
-            } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                // API 26-32: createOneShot without VibrationAttributes (attributes overload is
-                // API 33+ only). Predefined effects can be unsupported on some devices, so a raw
-                // timed amplitude pulse is the reliable choice here too.
-                android.os.VibrationEffect effect = android.os.VibrationEffect.createOneShot(duration, android.os.VibrationEffect.DEFAULT_AMPLITUDE);
-                vibrator.vibrate(effect);
-            } else {
-                // API < 26
-                vibrator.vibrate(duration);
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "vibrate() failed to trigger vibration: " + e.getMessage(), e);
+        if (mInputView != null) {
+            mInputView.invalidateAllKeys();
+            mInputView.requestLayout();
         }
     }
 
