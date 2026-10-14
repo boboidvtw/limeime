@@ -600,6 +600,11 @@ public class LIMEPreferenceManager {
 		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(ctx);
 		return Integer.parseInt(sp.getString("vibrate_level", "40"));
 	}
+
+	public void setVibrateLevel(int level){
+		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(ctx);
+		sp.edit().putString("vibrate_level", String.valueOf(level)).apply();
+	}
 	
 	
 	public boolean getAllowNumberMapping(){

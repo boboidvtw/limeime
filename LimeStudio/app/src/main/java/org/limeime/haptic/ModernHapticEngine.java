@@ -37,7 +37,7 @@ import org.limeime.KeypressHapticPolicy;
  * Supports:
  * - Linear Resonant Actuator (LRA) amplitude scaling (levels 1-5).
  * - Predefined tactile effects (EFFECT_CLICK, EFFECT_TICK, EFFECT_HEAVY_CLICK) on API 29+.
- * - Android 13+ USAGE_IME_FEEDBACK vibration attributes.
+ * - Android 13+ USAGE_TOUCH vibration attributes.
  * - System KEYBOARD_TAP fallback on supported hardware.
  */
 public final class ModernHapticEngine {
@@ -148,7 +148,7 @@ public final class ModernHapticEngine {
     @androidx.annotation.RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private void performApi33Haptic(Vibrator vibrator, int level, long duration, int amplitude) {
         VibrationAttributes attributes = new VibrationAttributes.Builder()
-                .setUsage(VibrationAttributes.USAGE_IME_FEEDBACK)
+                .setUsage(VibrationAttributes.USAGE_TOUCH)
                 .build();
 
         VibrationEffect effect = createScaledEffect(vibrator, level, duration, amplitude);
