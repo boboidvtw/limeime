@@ -51,3 +51,13 @@ App 內內建的 `AppUpdateManager` 自動比對版本：
      --title "萊姆輸入法 v<versionName>" \
      --notes "<更新說明>"
    ```
+
+---
+
+## ⚡ 5. 每次更改自動遞增版號鐵律 (Auto-Increment on Any Change Rule)
+
+為保證使用者的安裝相容性與 App 內自動更新偵測的 100% 精準度，團隊與 AI Agent 必須嚴格遵守以下自動升版機制：
+1. **任何程式碼或配置修改**（含 Bug 修復、功能擴充、CI 管線優化、安全調整）：
+   - **禁止原地修改而不遞增版號**。
+   - 每次修改交付前，**必須連帶遞增 `versionCode` (+100 或相應位階) 與 `versionName`**（如 `6.2.1` ➔ `6.2.2`）。
+2. **與 CI/CD 緊密綁定**：每次推送觸發的 `build-apk.yml` 會產出對應新版號的 signed release APK，並建立相應 Release，讓 App 內自動更新器能即時觸發通知並順暢更新。

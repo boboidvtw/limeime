@@ -63,6 +63,6 @@ jobs:
       - name: Upload Signed Release APK
         uses: actions/upload-artifact@v4
         with:
-          name: LIMEHD-6.2.1-release-apk
+          name: LIMEHD-6.2.2-release-apk
           path: LimeStudio/app/build/outputs/apk/release/*.apk
           retention-days: 14
