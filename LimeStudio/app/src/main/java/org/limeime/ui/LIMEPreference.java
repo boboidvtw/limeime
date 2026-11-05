@@ -234,6 +234,19 @@ public class LIMEPreference extends AppCompatActivity {
 			androidx.preference.Preference numpadAnchorPref = findPreference("numpad_anchor");
 			if (numpadAnchorPref != null)
 				numpadAnchorPref.setVisible(isTablet);
+
+			androidx.preference.Preference checkUpdatePref = findPreference("pref_check_update");
+			if (checkUpdatePref != null) {
+				checkUpdatePref.setOnPreferenceClickListener(preference -> {
+					android.widget.Toast.makeText(requireContext(), R.string.update_checking, android.widget.Toast.LENGTH_SHORT).show();
+					org.limeime.updater.AppUpdateManager.checkUpdate(requireContext(), true, result -> {
+						if (isAdded() && getActivity() != null) {
+							org.limeime.updater.AppUpdateDialogHelper.showUpdateResultDialog(getActivity(), result, true);
+						}
+					});
+					return true;
+				});
+			}
 		}
 
 		@Override

@@ -222,6 +222,27 @@ public class SetupFragment extends Fragment {
             });
         }
 
+        MaterialButton btnCheckAppUpdate = rootView.findViewById(R.id.btnCheckAppUpdate);
+        if (btnCheckAppUpdate != null) {
+            btnCheckAppUpdate.setOnClickListener(v -> {
+                btnCheckAppUpdate.setEnabled(false);
+                Toast.makeText(requireContext(), R.string.update_checking, Toast.LENGTH_SHORT).show();
+                org.limeime.updater.AppUpdateManager.checkUpdate(requireContext(), true, result -> {
+                    if (isAdded() && getActivity() != null) {
+                        btnCheckAppUpdate.setEnabled(true);
+                        org.limeime.updater.AppUpdateDialogHelper.showUpdateResultDialog(getActivity(), result, true);
+                    }
+                });
+            });
+
+            // Non-intrusive background check (throttled once every 24 hours)
+            org.limeime.updater.AppUpdateManager.checkUpdate(requireContext(), false, result -> {
+                if (isAdded() && result != null && result.hasUpdate()) {
+                    btnCheckAppUpdate.setText(getString(R.string.update_dialog_title, result.getReleaseInfo().getTagName()));
+                }
+            });
+        }
+
         return rootView;
     }
 

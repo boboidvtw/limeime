@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 
 <!--
   ~ /*
@@ -412,6 +412,17 @@
             android:key="physical_keyboard_sort"
             android:summary="@string/physical_keyboard_sort_summary"
             android:title="@string/physical_keyboard_sort" />
+    </PreferenceCategory>
+
+    <!-- 10. 軟體更新 -->
+    <PreferenceCategory
+        android:key="pref_section_app_update"
+        android:title="@string/pref_section_app_update">
+        <Preference
+            android:key="pref_check_update"
+            android:icon="@drawable/ic_download_24"
+            android:title="@string/pref_check_update_title"
+            android:summary="@string/pref_check_update_summary" />
     </PreferenceCategory>
 
 </PreferenceScreen>

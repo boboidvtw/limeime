@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -441,6 +441,18 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <!-- 檢查版本更新按鈕 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCheckAppUpdate"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="@string/btn_check_update"
+            app:icon="@drawable/ic_download_24"
+            app:iconGravity="textStart"
+            app:cornerRadius="12dp" />
 
         <!-- One-line copyright banner (txtVersion: set by SetupFragment) -->
         <TextView
