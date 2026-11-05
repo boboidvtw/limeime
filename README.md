@@ -42,22 +42,25 @@ LIME 不收集、不分享任何使用者資訊，也不要求帳號登入或個
 
 App 僅在功能需要時宣告少數權限（如下載碼表、按鍵震動、內建語音輸入等），各權限的實際用途與平台差異，請見手冊的[隱私說明](https://lime-ime.github.io/limeime/pages/privacy.html)。
 
-## 下載
+## 📦 下載與安裝
 
-### 最新改版（v6.2.0-DarkAccent）
+### 最新正式發布版（v6.2.2 正式生產包）
 
-- **版本**：v6.2.0-DarkAccent
-- **顯示名稱**：萊姆輸入法 (Dark Accent)
-- **套件名稱**：`net.toload.main.hd2026`
-- **APK 安裝檔**：[LIMEHD-v6.2.0-DarkAccent.apk](https://github.com/boboidvtw/limeime/releases)
+- **最新版本**：`v6.2.2` (VersionCode `202662200`)
+- **顯示名稱**：萊姆輸入法
+- **套件名稱**：`org.limeime`
+- **正式 Release 安裝檔 (6.92 MB)**：[**點此直接下載 LIMEHD202662200-6.2.2.apk**](https://github.com/boboidvtw/limeime/releases/download/v6.2.2/LIMEHD202662200-6.2.2.apk)
+- **GitHub Releases 頁面**：[boboidvtw/limeime Releases](https://github.com/boboidvtw/limeime/releases)
+- **📖 疑難排解與啟用指南**：請參閱專屬文件 [**安裝排查、問題復盤與啟用全指南**](docs/RELEASE_TROUBLESHOOTING_AND_INSTALL_GUIDE.md) 與 [版本號與發布標準規範](docs/VERSIONING_AND_RELEASE_STANDARD.md)。
 
 ---
 
-## 版本與相容性
+## 📱 版本與系統相容性
 
-- 目標 SDK：37
-- 最低支援 SDK：25（Android 7.1；自 v6.1.32 起）
-- GitHub Release APK 與 Google Play 版本使用不同套件名稱與簽署金鑰，可以同時安裝並共存，但不能互相直接更新或升級。
+- **目標 SDK**：37 (Android 17)
+- **最低支援 SDK**：25 (Android 7.1.1；推薦 Android 10+ 獲得最佳觸覺回饋體驗)
+- **純淨單一 DEX 與 R8 優化**：自 v6.2.2 起全面採用生產環境 Release 構建，移除所有測試插樁，100% 解決實機安裝 DEXOPT 失敗問題。
+- **數位簽名**：以專用 Release Keystore 啟用正式 v1 + v2 雙軌簽署。若手機曾有安裝 Google Play 舊版，請務必先將舊版完整解除安裝（不保留資料）再安裝本版。
 
 ---
 
