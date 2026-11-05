@@ -39,10 +39,20 @@ android {
     signingConfigs {
         if (hasReleaseSigning) {
             release {
-                storeFile = file(keystoreProps['storeFile'])
+                storeFile = rootProject.file(keystoreProps['storeFile'])
                 storePassword = keystoreProps['storePassword']
                 keyAlias = keystoreProps['keyAlias']
                 keyPassword = keystoreProps['keyPassword']
+                v1SigningEnabled true
+                v2SigningEnabled true
+            }
+            debug {
+                storeFile = rootProject.file(keystoreProps['storeFile'])
+                storePassword = keystoreProps['storePassword']
+                keyAlias = keystoreProps['keyAlias']
+                keyPassword = keystoreProps['keyPassword']
+                v1SigningEnabled true
+                v2SigningEnabled true
             }
         }
     }
@@ -75,6 +85,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
+            if (hasReleaseSigning) {
+                signingConfig signingConfigs.debug
+            }
             enableUnitTestCoverage = true
             enableAndroidTestCoverage = true
         }

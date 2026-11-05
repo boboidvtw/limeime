@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build:
-    name: Build Debug APK & Run Tests
+    name: Build Signed APK & Run Tests
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
@@ -31,17 +31,36 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x LimeStudio/gradlew
 
+      - name: Configure Keystore and Signing Credentials
+        run: |
+          cat << 'EOF' | base64 -d > LimeStudio/lime_github_release.jks
+          MIIJ4AIBAzCCCaYGCSqGSIb3DQEHAaCCCZcEggmTMIIJjzCCBCcGCSqGSIb3DQEHBqCCBBgwggQUAgEAMIIEDQYJKoZIhvcNAQcBMBwGCiqGSIb3DQEMAQYwDgQIWa3GLJyDHRUCAggAgIID4CejPZMsRDZpiISZvK7ecjojuYlojyNgNJ3xHntjkclQZ0b2L7Mx+lNPJodczHcHdwVLySff0HDojrgmCbtbLRU0qdBphdCSdLqRavMTyKS07foulDMamWjIAECflBCdZYB2u3Vf/cdR5ZfB4xyGiNPfvEKjQcp3hJXds/z0AkiD8594ozTO1SrmlZDTXtWbdX1kBkDKtb4frZwj5YoXYEqC/Lot/Z6QsrTn+HMn2ZeyNWzcBx6oE7Xlwbzp+nU53CURPvGYnPMzrf7TeY0rlsQhVxO1zBTXhbmZa06iC7b2QhaaGi5XBIpLOSK1ezmm2JGfxHyjn46lWghmp+eiCeYcsnWAOA9M9igAtwhT8Xc0dprnBc9b/w59OCdkOmnku557KVCtbeic0FDH5z9i0PcgOR2piMoAU+J6oqjLesrHv/D/VjPDyOtihi6461bkz8dpKrQ8NRq51XbYudgh8L5aBQ0j5sRx9MaqktX/QJxkZ7VTKkRxJFOpygkOoNyP3+G6wtwmWbCps4gAFF8FU2Al7R2AS2vNFuGIu3ChfQmNv5lDURFPVKZR7W3eUiYthPhfUDCe4xelZOtWdiV6Gqq93BOJDT4A4SxD6+u5pS5dEb3t4Yl1U4Sju+GiU16DvUDFznur/TNnu1QtzdMTa8u6QgNlSDEHh8y6Z6iOPiNF0J+0UPQrYLhXKJOzuz/HFyfLX3Mt6c3JXAWGRwN2WEKDU3ZHeIfAUdjmwedfnSjL9dLFutgjfl0XTXJhs04BoWHtL3r+yfIfvV0SDaqIy2xSkCemPymb9OHUyMca30teIPcJTuq9s+TmKPIztWcjLwj/Nnz9Zs/Rn+FClfO0QEucAoNyPkPFqI6mDU21YAe4JrQu0q2luaMmGv2Y8KU8xBv44b1JDhy4ZSgmXetNBdXGuw4vt1l2WfmiX6vxMNq74gXeh++lM/3QF/17wdjIsv+4vLynPn+iPRevS8gpFSdxRp107elpox1bi7R8gzjrFVtFCU/jjBh4+ejSLpM9ynZEqSgxDg6fwxEq3nEnJmZrp1BM0d+C4yfO6P7r8hcpW2CQsTvg+YBAoH/fZ7p6r5i/7Ow7WLC3yEmZIK4P3XCYEXqzDgKF8LYnyKvxz9IsieXpIvgxPYwL9egCxrcU4PKQeG7W7y37GWKP16tHp+bV2AiqDo5FlX2o+zZZfOhQtmeLtC4WESM4he5pLKZqlMp4rqiyFY4Rhv9Lo8AA4QRbcchmdrVeB9TK0BYvbqXdsKUcyABSCeeXZ94sxchHZ/ncqecwGtgFRwi+oGqUdJp1xp9r9MMqalaPvUTMJX6XMIIFYAYJKoZIhvcNAQcBoIIFUQSCBU0wggVJMIIFRQYLKoZIhvcNAQwKAQKgggTuMIIE6jAcBgoqhkiG9w0BDAEDMA4ECFwARZdTfzuxAgIIAASCBMjnhmPS4YvweaIlVbR3sO8s7dHHG+Ya0jOKUfhku5fEH/20rBwEfWA1TvqohRN3CKlzxO5xLsuMJQds0iXECvgjp+yDZ/C6KML1IvS1ef0iX6qWPfVoMB66m2bu2uwOZfIcBM+g+me3HUj6hI+cSF8Q7sJZWJdGaaVfnGtwn596psckhp+lnrFvz01eI85CezTzFRr1HMmYK4BEy+6cdSJ8IelX0gaoPocZkTUbTp3Hq2YkpxsGEkzoYQ80N5lSZ0mFEq0RyFtjMyPOQHGitklbH1Lj16Z8aopo2MWGCiSJRrLnYDF9559MfskN/ndj1OHMtqmf4dn9Vafs6tfuWfqVnd3BvEjnMy+R8iT+aC0Xi0Es0LzpKzIXmpPK2aNPBhfl4F1gS1iMxULBlvwm9vafl7FtNhle3Uv7MDk95NzrmuDD3De9S7sDsHSjZvdYPBLUfoqkbc/Rbq1iXR4JNNK6r5KrJdIneZunEiOoDlQ7I7BXWJMH3dy7ajjR59qRKxHlep5hGKyzD2sRDMOYLYJ4l9zUVaZFShx5ZIvHjbxZVwCgW7fIM3mqA7J36xLB9BHHwZRRGYlRJ+/4S3l7jeBNCgE/GZ06WMUQBrfdTupOSSsOmOdKZMDpYfgeQV3qNinU8/uTS0dPPPmyqIez7ZcqLuLE/MU8JMLrWk6UavCLmVkzcbtEObPm1IXa3aOrCVVGm1Zv8lxGSYsqD5jzFyaKW2tYi2PwdxekYgKHN7+prKkxiV9xLSCQmaZl5+f+S7gpx2uvD3bmX4W36VB7FxMBX0YbW7RzJyN62viECpG4Ym7eyM1Fg/m9oS2+YE+Amxpnzeo2K0QHxrKzjH6wuj+e/xB7JjPsHQ22IT1HMrK3eS9pDSSZDl/44+0pzTc0U/4nAwuiBhvwOsg6w4i8uEFxIe5OCdx+f88XdjwbpowsW/IFNzRhv2jsAsN5CT7zDzbxSmxcX6y1mCkSsbbaAgJ82yaqyV6vT6ywqUfRJaeqZWsAL3ZQObe5/Aluc/WIN8mJlo5XRg2h4ylx/99Z1/3QLUV4nB87zkBngpxYxilwVIAb2FpiF+ZL/lGcoUXyx3+nHUfoO2E2OdX9Ja/ZagoQkcB5Yfa4zovmdYt9XAxGOYivpBIeexOVOXxS/w+SMkl7d2iygRkpXUa7NnN/rP9U4knLUZM5026J7/6RvA9Bs3y0Nw3gjy4JxJLnavbw2WRvnpLZNqNKDE7v7WgWj8vXF+Pi0eSGgSfV5wWxGcn8376TNyvgoIKCchutWMTwxDTXrDn56sCn/kxwqHqLG+9c+68qCjPLSmO9pTYWfruYt4XkL26bugP+3Q3LYEWVv6IEjTAHCTV/+IdkYRQE8TceU+PNBv9Tn/FWyvRQ8k774Ky4NzVHivnhK1j8hXeznPCE+X481K8bqFb/xmG/M2eYXV0nxroVkcHXXRgRIJzzHJl43LMP8lgYRVmbi298sNC3x1ocY/yfspu89QSp41NvFgKeOIeMvRmHAVT7sbDVjCm2SjUidQNH5vfeJ5TuqA1H8YcfCEPS2jLnvFXPBJCpd8/OY0S2e7cIuBm3KEdvy0b9sdsPNeu9s0uwFEBbuj9egHSW3QNeRrJkqSUo/zwfVF5arK/woOoxRDAdBgkqhkiG9w0BCRQxEB4OAGwAaQBtAGUAaQBtAGUwIwYJKoZIhvcNAQkVMRYEFCrRvH8PPLUd+7Yy4XBYaqSGFVnjMDEwITAJBgUrDgMCGgUABBQP03IEqTISuorxwTIePMfkHSDwXwQIWxqAMwjAXBQCAggA
+          EOF
+          cat << 'EOF' > LimeStudio/keystore.properties
+          storeFile=lime_github_release.jks
+          storePassword=limeime2026
+          keyAlias=limeime
+          keyPassword=limeime2026
+          EOF
+
       - name: Run Unit Tests
         run: |
           cd LimeStudio
           ./gradlew testDebugUnitTest
 
-      - name: Build Debug APK
+      - name: Build Signed APK
         run: |
           cd LimeStudio
           ./gradlew assembleDebug
 
-      - name: Upload Debug APK
+      - name: Verify APK Signature
+        run: |
+          echo "Verifying APK signature..."
+          APK_PATH=$(ls LimeStudio/app/build/outputs/apk/debug/*.apk | head -n 1)
+          BUILD_TOOLS_DIR=$(ls -d $ANDROID_HOME/build-tools/* | sort -V | tail -n 1)
+          $BUILD_TOOLS_DIR/apksigner verify --print-certs "$APK_PATH"
+
+      - name: Upload Signed APK
         uses: actions/upload-artifact@v4
         with:
           name: LIMEHD-v6.2.0-DarkAccent-debug-apk
