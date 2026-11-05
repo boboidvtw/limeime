@@ -88,8 +88,10 @@ android {
             if (hasReleaseSigning) {
                 signingConfig signingConfigs.debug
             }
-            enableUnitTestCoverage = true
-            enableAndroidTestCoverage = true
+            // Code coverage is disabled for standalone runnable builds
+            // to avoid JaCoCo bytecode instrumentation and dexopt failures
+            enableUnitTestCoverage = false
+            enableAndroidTestCoverage = false
         }
     }
     productFlavors {

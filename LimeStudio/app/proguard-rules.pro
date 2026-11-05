@@ -35,6 +35,9 @@
 # --- In-app billing AIDL ---
 -keep class com.android.vending.billing.** { *; }
 
+# --- In-App Auto Updater ---
+-keep class org.limeime.updater.** { *; }
+
 # --- Generic View constructor safety net (any other XML-inflated views) ---
 -keepclassmembers class * extends android.view.View {
     public <init>(android.content.Context);

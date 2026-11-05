@@ -48,21 +48,21 @@ jobs:
           cd LimeStudio
           ./gradlew testDebugUnitTest
 
-      - name: Build Signed APK
+      - name: Build Signed Release APK
         run: |
           cd LimeStudio
-          ./gradlew assembleDebug
+          ./gradlew assembleRelease
 
       - name: Verify APK Signature
         run: |
-          echo "Verifying APK signature..."
-          APK_PATH=$(ls LimeStudio/app/build/outputs/apk/debug/*.apk | head -n 1)
+          echo "Verifying Release APK signature..."
+          APK_PATH=$(ls LimeStudio/app/build/outputs/apk/release/*.apk | head -n 1)
           BUILD_TOOLS_DIR=$(ls -d $ANDROID_HOME/build-tools/* | sort -V | tail -n 1)
           $BUILD_TOOLS_DIR/apksigner verify --print-certs "$APK_PATH"
 
-      - name: Upload Signed APK
+      - name: Upload Signed Release APK
         uses: actions/upload-artifact@v4
         with:
-          name: LIMEHD-6.2.1-apk
-          path: LimeStudio/app/build/outputs/apk/debug/*.apk
+          name: LIMEHD-6.2.1-release-apk
+          path: LimeStudio/app/build/outputs/apk/release/*.apk
           retention-days: 14
